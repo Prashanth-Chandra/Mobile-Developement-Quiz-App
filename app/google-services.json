@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "138384273670",
+    "firebase_url": "https://online-quiz-5ad77-default-rtdb.firebaseio.com",
+    "project_id": "online-quiz-5ad77",
+    "storage_bucket": "online-quiz-5ad77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138384273670:android:64a59ea342de9a77da2e87",
+        "android_client_info": {
+          "package_name": "com.prashanth.onlineexams"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAqsJ3Wq4UGEfZMQWnJiV-rHc6TeWENQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:138384273670:android:9200556bbfcdcb57da2e87",
+        "android_client_info": {
+          "package_name": "com.prashanth.quizApp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAqsJ3Wq4UGEfZMQWnJiV-rHc6TeWENQk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
