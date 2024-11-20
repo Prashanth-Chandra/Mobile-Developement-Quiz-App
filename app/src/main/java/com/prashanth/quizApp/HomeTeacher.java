@@ -28,7 +28,7 @@ public class HomeTeacher extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_teacher);
+        setContentView(R.layout.activity_home);
 
         DatabaseReference database = FirebaseDatabase.getInstance().getReference();
         ProgressDialog progressDialog = new ProgressDialog(HomeTeacher.this);
@@ -40,22 +40,33 @@ public class HomeTeacher extends AppCompatActivity {
         userUID = b.getString("User UID");
 
         TextView name = findViewById(R.id.name);
+        TextView total_questions = findViewById(R.id.total_questions);
+        TextView total_points = findViewById(R.id.total_points);
+        Button startQuiz = findViewById(R.id.startQuiz);
         Button createQuiz = findViewById(R.id.createQuiz);
+        RelativeLayout solvedQuizzes = findViewById(R.id.solvedQuizzes);
         RelativeLayout your_quizzes = findViewById(R.id.your_quizzes);
-        RelativeLayout all_quizzes = findViewById(R.id.all_quizzes);
         EditText quiz_title = findViewById(R.id.quiz_title);
+        EditText start_quiz_id = findViewById(R.id.start_quiz_id);
         ImageView signout = findViewById(R.id.signout);
 
         ValueEventListener listener = new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(HomeTeacher.this, "Logged in as Teacher", Toast.LENGTH_SHORT).show();
-
                 DataSnapshot usersRef = snapshot.child("Users").child(userUID);
                 firstName = usersRef.child("First Name").getValue().toString();
 
+                if (usersRef.hasChild("Total Points")) {
+                    String totalPoints = usersRef.child("Total Points").getValue().toString();
+                    int points = Integer.parseInt(totalPoints);
+                    total_points.setText(String.format("%03d", points));
+                }
+                if (usersRef.hasChild("Total Questions")) {
+                    String totalQuestions = usersRef.child("Total Questions").getValue().toString();
+                    int questions = Integer.parseInt(totalQuestions);
+                    total_questions.setText(String.format("%03d", questions));
+                }
                 name.setText("Welcome "+firstName+"!");
-
                 progressDialog.dismiss();
             }
 
@@ -84,14 +95,25 @@ public class HomeTeacher extends AppCompatActivity {
             startActivity(i);
         });
 
-        your_quizzes.setOnClickListener(v -> {
-            Intent i = new Intent(HomeTeacher.this, ListQuizzes.class);
-            i.putExtra("Operation", "List Created Quizzes");
+        startQuiz.setOnClickListener(v-> {
+            if (start_quiz_id.getText().toString().equals("")) {
+                start_quiz_id.setError("Quiz title cannot be empty");
+                return;
+            }
+            Intent i = new Intent(HomeTeacher.this, Exam.class);
+            i.putExtra("Quiz ID", start_quiz_id.getText().toString());
+            start_quiz_id.setText("");
             startActivity(i);
         });
 
-        all_quizzes.setOnClickListener(v -> {
-            Intent i = new Intent(HomeTeacher.this, AllQuizzes.class);
+        solvedQuizzes.setOnClickListener(v -> {
+            Intent i = new Intent(HomeTeacher.this, ListQuizzes.class);
+            i.putExtra("Operation", "List Solved Quizzes");
+            startActivity(i);
+        });
+
+        your_quizzes.setOnClickListener(v -> {
+            Intent i = new Intent(HomeTeacher.this, ListQuizzes.class);
             i.putExtra("Operation", "List Created Quizzes");
             startActivity(i);
         });

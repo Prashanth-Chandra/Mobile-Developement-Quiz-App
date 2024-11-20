@@ -176,9 +176,16 @@ public class AllQuizzes extends AppCompatActivity {
             ValueEventListener listener = new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    Toast.makeText(AllQuizzes.this, "Displaying all your unsolved quizzes", Toast.LENGTH_SHORT).show();
 //                    DataSnapshot ds = snapshot.child("Quizzes").child(uid).child("Quizzes Created");
-
-                    String LastID = snapshot.child("Quizzes").child("Last ID").getValue().toString();
+                    String LastID;
+                    try{
+                        LastID = snapshot.child("Quizzes").child("Last ID").getValue().toString();
+                    }
+                    catch (NullPointerException e){
+                        Toast.makeText(AllQuizzes.this, "There are no quizzes", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
 //                    runOnUiThread(() -> {
 //                        Toast.makeText(AllQuizzes.this, LastID, Toast.LENGTH_SHORT).show();
@@ -194,6 +201,13 @@ public class AllQuizzes extends AppCompatActivity {
                         quizCount = 0;
                     }
 
+//                    try {
+//                        Thread.sleep(3000);
+//                    }
+//                    catch (Exception e){
+//                        System.out.println("Hello");
+//                    }
+
                     DataSnapshot ds = snapshot.child("Users").child(uid).child("Quizzes Solved");
                     for (DataSnapshot f : ds.getChildren()) {
                         solved.add(f.getKey());
@@ -201,9 +215,11 @@ public class AllQuizzes extends AppCompatActivity {
 //                            Toast.makeText(AllQuizzes.this, f.getKey(), Toast.LENGTH_SHORT).show();
 //                        });
                     }
+//                    Toast.makeText(AllQuizzes.this, solved.toString(), Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(AllQuizzes.this, quizCount + "ffffff ", Toast.LENGTH_SHORT).show();
 
 
-                    for(Integer i=100000; i<quizCount; i++){
+                    for(Integer i=100000; i<=quizCount; i++){
                         if(!solved.contains(i.toString())){
                             ids.add(i.toString());
                             data.add(snapshot.child("Quizzes").child(i.toString()).child("Title").getValue().toString());

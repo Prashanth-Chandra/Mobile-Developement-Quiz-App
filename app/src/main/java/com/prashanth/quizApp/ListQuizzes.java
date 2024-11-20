@@ -187,6 +187,7 @@ public class ListQuizzes extends AppCompatActivity {
                 });
             } else if (createdQuizzes) {
                 item.setOnClickListener(view1 -> {
+                    Toast.makeText(ListQuizzes.this, "Listing all the created quizzes", Toast.LENGTH_SHORT).show();
                     Intent intent = new Intent(ListQuizzes.this, ListQuizzes.class);
                     intent.putExtra("Operation", "List Quiz Grades");
                     intent.putExtra("Quiz ID", ids.get(i));

@@ -250,7 +250,13 @@ public class Signup extends AppCompatActivity {
 
                         runOnUiThread(() -> {
                             progressDialog.dismiss();
-                            Intent i = new Intent(Signup.this, Home.class);
+                            Intent i;
+                            if(userType.equals("Teacher")){
+                                i = new Intent(Signup.this, HomeTeacher.class);
+                            }
+                            else{
+                                i = new Intent(Signup.this, HomeStudent.class);
+                            }
                             i.putExtra("User UID", user.getUid());
                             startActivity(i);
                             finish();
